@@ -5,8 +5,58 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        
-        
+        <main>
+            <header>
+                <h1>WEM Calculator</h1>
+            </header>
+            <div class="options">
+                <div class="option">
+                    <p>Rotation</p>
+                    <select name="rotations">
+                        <option value="top">Tops</option>
+                        <option value="cyc">Cyclone</option>
+                        <option value="nes">Nessie's</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <p>Rotators</p>
+                    <select name="rotators">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <p>Duration</p>
+                    <input type="time" name="opening"> to
+                    <input type="time" name="closing">
+                </div>
+                <div class="option">
+                    <p>Starting Spot</p>
+                    <select name="spots">
+                        <option>TBD</option>
+                    </select>
+                </div>
+            </div>
+            <div class="schedule">
+                <table>
+                    <thead>
+                        <th>Time</th>
+                        <th>Spot</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>00:00 AM</td>
+                            <td>Cyclone</td>
+                        </tr>
+                        <tr>
+                            <td>00:20 AM</td>
+                            <td>Slideboarding</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
         <script src="script.js"></script>
     </body>
 </html>
