@@ -1,6 +1,6 @@
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scaleable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <title>WEM Calculator</title>
         <link rel="stylesheet" href="style.css">
     </head>
@@ -12,51 +12,46 @@
             <div class="options">
                 <div class="option">
                     <p>Rotation</p>
-                    <select name="rotations">
-                        <option value="top">Tops</option>
-                        <option value="cyc">Cyclone</option>
-                        <option value="nes">Nessie's</option>
+                    <select id="rotations">
+                        <option value="tops">Tops</option>
+                        <option value="cyclone">Cyclone</option>
+                        <option value="nessies">Nessie's</option>
                     </select>
                 </div>
                 <div class="option">
                     <p>Rotators</p>
-                    <select name="rotators">
+                    <select id="rotators">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                     </select>
                 </div>
                 <div class="option">
-                    <p>Duration</p>
-                    <input type="time" name="opening"> to
-                    <input type="time" name="closing">
-                </div>
-                <div class="option">
                     <p>Starting Spot</p>
-                    <select name="spots">
+                    <select id="spots">
                         <option>TBD</option>
                     </select>
+                </div>
+                <div class="option">
+                    <p>Shift Duration</p>
+                    <input type="time" id="opening"> to
+                    <input type="time" id="closing">
                 </div>
             </div>
             <div class="schedule">
                 <table>
                     <thead>
-                        <th>Time</th>
+                        <th id="timeHeader">Time</th>
                         <th>Spot</th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>00:00 AM</td>
-                            <td>Cyclone</td>
-                        </tr>
-                        <tr>
-                            <td>00:20 AM</td>
-                            <td>Slideboarding</td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
         </main>
+
+        <script src="rotations.js"></script>
         <script src="script.js"></script>
     </body>
 </html>
