@@ -8,11 +8,13 @@
         <main>
             <header>
                 <h1>WEM Calculator</h1>
+                <h2 id="clock">00:00:00 am</h2>
+                <p id="currentspot">N/A</p>
             </header>
             <div class="options">
                 <div class="option">
                     <p>Rotation</p>
-                    <select id="rotations">
+                    <select class="inp" id="rotations">
                         <option value="tops">Tops</option>
                         <option value="cyclone">Cyclone</option>
                         <option value="nessies">Nessie's</option>
@@ -20,22 +22,22 @@
                 </div>
                 <div class="option">
                     <p>Rotators</p>
-                    <select id="rotators">
+                    <select class="inp" id="rotators">
                         <option value="1">1</option>
-                        <option value="2">2</option>
+                        <option value="2" selected>2</option>
                         <option value="3">3</option>
                     </select>
                 </div>
                 <div class="option">
                     <p>Starting Spot</p>
-                    <select id="spots">
-                        <option>TBD</option>
+                    <select class="inp" id="spots">
+                        
                     </select>
                 </div>
                 <div class="option">
                     <p>Shift Duration</p>
-                    <input type="time" id="opening"> to
-                    <input type="time" id="closing">
+                    <input class="inp" type="time" id="opening" value="10:00"> to
+                    <input class="inp" type="time" id="closing" value="16:20">
                 </div>
             </div>
             <div class="schedule">
@@ -51,6 +53,7 @@
             </div>
         </main>
 
+        <script src="https://momentjs.com/downloads/moment.js"></script>
         <script src="rotations.js"></script>
         <script src="script.js"></script>
     </body>
