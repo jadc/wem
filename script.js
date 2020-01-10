@@ -1,8 +1,4 @@
 // Get Data
-let getRotation = _ => {
-    return document.getElementById("rotations").value;
-}
-
 let getRotators = _ => {
     return document.getElementById("rotators").value; //string
 }
@@ -21,38 +17,57 @@ let getCloseTime = _ => {
     return moment(raw, "HH:mm");
 }
 
-// Table Functions
 let currentRotation;
+let generateCurrentRotation = _ => {
+    let input = document.getElementById("rotations").value;
+    // Similar to arrays, copies of objects are actually just
+    // pointers. This JSON code is the object equivalent of
+    // Array#slice with no parameters. e.g. myarray.slice();
+    let copy = JSON.parse(JSON.stringify(rotations));
+    let raw = copy[input];
+
+    // Add breaks in respect to number of rotators. (+20 min per rotator)
+    for(let i = 0; i < getRotators(); i++){
+        raw.push("<b>Break</b>");
+    }
+    
+    return raw;
+}
+
+// Table Functions
 let populateTable = _ => {
     // Reset
+    currentRotation = generateCurrentRotation().slice();
+    populateList();
     clearTable();
-    setBreaks();
-    currentRotation = {};
 
     let iterate = 0;
     let open = getOpenTime();
-    let rotation = rotations[getRotation()];
-
-    // Update starting spot choice
-    for(let i = 0; i < rotation.length; i++){
-        let op = document.createElement("option");
-        op.innerHTML = rotation[i];
-        document.getElementById("spots").appendChild(op);
-    }
 
     console.log(open.format("hh:mm a"));
     console.log(getOpenTime().format("hh:mm a"));
     console.log(getCloseTime().format("hh:mm a"));
 
+    let currentSpot = {};
     while(open.isBefore(getCloseTime())){
-        currentRotation[open] = rotation[iterate];
-        addToTable(open.format("h:mm a"), rotation[iterate]);
+        currentSpot[open] = currentRotation[iterate];
+        addToTable(open.format("h:mm a"), currentRotation[iterate]);
 
         // Check for break, if not normal add
         open.add(20, "minutes");
         
-        console.log(rotation.length + " --- " + iterate);
-        iterate = iterate < rotation.length - 1 ? iterate + 1 : 0
+        iterate = iterate < currentRotation.length - 1 ? iterate + 1 : 0
+    }
+}
+
+let populateList = _ => {
+    let spots = document.getElementById("spots");
+    while(spots.lastChild) spots.removeChild(spots.lastChild);
+    // Update starting spot choice
+    for(let i = 0; i < currentRotation.length; i++){
+        let op = document.createElement("option");
+        op.innerHTML = currentRotation[i];
+        document.getElementById("spots").appendChild(op);
     }
 }
 
@@ -74,6 +89,7 @@ let addToTable = (time, spot) => {
 }
 
 let clearTable = _ => {
+    // Clear table
     let tbody = document.getElementsByTagName("tbody")[0];
     while(tbody.lastChild) tbody.removeChild(tbody.lastChild);
 }
@@ -83,27 +99,20 @@ let inputs = document.querySelectorAll(".inp");
 inputs.forEach(i => {
     i.addEventListener("change", populateTable);
 });
-
-// Add breaks
-let rotations;
-let setBreaks = _ => {
-    rotations = rawRotations;
-    for(let i = 0; i < getRotators; i++){
-        rotations[getRotation()].push("Break");
-    }
-}
+// Rotation Choice Updates Only Starting Spot List
 
 // Clock
 let updateClock = _ => {
     let format = moment().format("h:mm:ss a");
     document.getElementById("clock").innerHTML = format;
     document.getElementById("currentspot").innerHTML = currentRotation[moment()];
-    //console.log(getCloseTime().diff(getOpenTime(), "minutes"))
-    setTimeout(updateClock, 100);
+    //console.log(getCloseTime().diff(moment(), "seconds"))
+    setTimeout(updateClock, 500);
 }
 
-// DEFAULTs
+// DEFAULTS
 (_ => {
     populateTable();
+    populateList();
     updateClock();
 })();
