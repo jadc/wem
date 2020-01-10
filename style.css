@@ -59,13 +59,12 @@ th {
 }
 
 th:first-of-type {
-    width: 33.33%; /* fallback */
-    width: calc(100% / 3);
+    width: 5em;
 }
 
 td {
     padding: 1em;
-    text-align: center;
+    text-align: left;
 }
 
 tr {
@@ -77,8 +76,9 @@ tr:nth-child(even) {
 }
 
 td:first-child > p {
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 0.5em;
+    font-family: monospace;
+    font-size: 1.25em;
+    text-align: right;
 }
 
 #clock {

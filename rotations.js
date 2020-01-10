@@ -1,4 +1,4 @@
-const rawRotations = 
+const rotations = 
 {
     "tops": [
         "Twister Top",
