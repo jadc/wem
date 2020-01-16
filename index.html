@@ -9,7 +9,6 @@
             <header>
                 <h1>WEM Calculator</h1>
                 <h2 id="clock">00:00:00 am</h2>
-                <p id="currentspot">N/A</p>
             </header>
             <div class="options">
                 <div class="option">
@@ -30,14 +29,14 @@
                 </div>
                 <div class="option">
                     <p>Starting Spot</p>
-                    <select id="spots">
+                    <select id="spots" class="inp">
                         
                     </select>
                 </div>
                 <div class="option">
                     <p>Shift Duration</p>
-                    <input class="inp" type="time" id="opening" value="10:00"> to
-                    <input class="inp" type="time" id="closing" value="16:20">
+                    <input class="inp" type="time" id="opening" value="10:00" step="1200"> to
+                    <input class="inp" type="time" id="closing" value="16:20" step="1200">
                 </div>
             </div>
             <div class="schedule">

@@ -22,39 +22,40 @@ let generateCurrentRotation = _ => {
     let input = document.getElementById("rotations").value;
     // Similar to arrays, copies of objects are actually just
     // pointers. This JSON code is the object equivalent of
-    // Array#slice with no parameters. e.g. myarray.slice();
+    // Array#slice with no parameters.
     let copy = JSON.parse(JSON.stringify(rotations));
     let raw = copy[input];
 
     // Add breaks in respect to number of rotators. (+20 min per rotator)
     for(let i = 0; i < getRotators(); i++){
-        raw.push("<b>Break</b>");
+        raw.push(`Break ${i + 1}`);
     }
     
     return raw;
 }
 
 // Table Functions
+let currentRotationTimes = {};
 let populateTable = _ => {
     // Reset
     currentRotation = generateCurrentRotation().slice();
     populateList();
     clearTable();
 
+    // Use list option to skip ahead in list iteration, otherwise, 0
     let iterate = 0;
+    for(let i = 0; i < currentRotation.length; i++){
+        if(currentRotation[i] === getStartingSpot()) iterate = i;
+    }
     let open = getOpenTime();
 
-    console.log(open.format("hh:mm a"));
-    console.log(getOpenTime().format("hh:mm a"));
-    console.log(getCloseTime().format("hh:mm a"));
-
-    let currentSpot = {};
+    let iteratedSpot = {};
     while(open.isBefore(getCloseTime())){
-        currentSpot[open] = currentRotation[iterate];
+        iteratedSpot[open] = currentRotation[iterate];
         addToTable(open.format("h:mm a"), currentRotation[iterate]);
-
-        // Check for break, if not normal add
         open.add(20, "minutes");
+
+        currentRotationTimes[open] = currentRotation[iterate];
         
         iterate = iterate < currentRotation.length - 1 ? iterate + 1 : 0
     }
@@ -62,6 +63,8 @@ let populateTable = _ => {
 
 let populateList = _ => {
     let spots = document.getElementById("spots");
+    if(spots.firstChild.value === currentRotation[0]) return;
+
     while(spots.lastChild) spots.removeChild(spots.lastChild);
     // Update starting spot choice
     for(let i = 0; i < currentRotation.length; i++){
@@ -99,20 +102,18 @@ let inputs = document.querySelectorAll(".inp");
 inputs.forEach(i => {
     i.addEventListener("change", populateTable);
 });
-// Rotation Choice Updates Only Starting Spot List
 
 // Clock
 let updateClock = _ => {
-    let format = moment().format("h:mm:ss a");
+    let now = moment();
+    let format = now.format("h:mm:ss a");
     document.getElementById("clock").innerHTML = format;
-    document.getElementById("currentspot").innerHTML = currentRotation[moment()];
-    //console.log(getCloseTime().diff(moment(), "seconds"))
+
     setTimeout(updateClock, 500);
 }
 
 // DEFAULTS
 (_ => {
     populateTable();
-    populateList();
     updateClock();
 })();
