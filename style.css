@@ -83,4 +83,5 @@ td:first-child > p {
 
 #clock {
     font-family: monospace;
+    font-weight: 100;
 }
